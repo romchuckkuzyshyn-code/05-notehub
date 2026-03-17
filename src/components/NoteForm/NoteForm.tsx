@@ -5,8 +5,6 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import * as Yup from "yup";
 import clsx from "clsx";
 
-import ErrorMessage from "../ErrorMessage/ErrorMessage";
-
 const scheme = Yup.object().shape({
   title: Yup.string().min(3).max(50).required(),
   content: Yup.string().max(500).required(),
@@ -67,11 +65,7 @@ const NoteForm = ({ closeModal }: NoteFormProps) => {
                 className={css.input}
               />
               {isInvalidTitle && (
-                <ErrorMessage
-                  component="span"
-                  name="title"
-                  className={css.error}
-                />
+                <Field as="span" name="title" className={css.error} />
               )}
             </div>
 
@@ -84,10 +78,13 @@ const NoteForm = ({ closeModal }: NoteFormProps) => {
                 rows={8}
                 className={css.textarea}
               />
-              <span
-                name="content"
-                className={clsx(isInvalidContent && css.error)}
-              />
+              {isInvalidContent && (
+                <Field
+                  as="span"
+                  name="content"
+                  className={clsx(isInvalidContent && css.error)}
+                />
+              )}
             </div>
 
             <div className={css.formGroup}>
@@ -99,7 +96,7 @@ const NoteForm = ({ closeModal }: NoteFormProps) => {
                 <option value="Meeting">Meeting</option>
                 <option value="Shopping">Shopping</option>
               </Field>
-              <span name="tag" className={css.error} />
+              <Field as="span" name="tag" className={css.error} />
             </div>
 
             <div className={css.actions}>
