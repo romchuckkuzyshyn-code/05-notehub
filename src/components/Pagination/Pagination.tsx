@@ -1,7 +1,7 @@
 import css from "./Pagination.module.css";
 import ReactPaginate from "react-paginate";
-
-const Paginate = (ReactPaginate as any).default || ReactPaginate;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const Paginate = (ReactPaginate as any).default ?? ReactPaginate;
 
 interface PaginationProps {
   totalPages: number;
@@ -15,7 +15,9 @@ const Pagination = ({ totalPages, setPage, page }: PaginationProps) => {
       pageCount={totalPages}
       pageRangeDisplayed={5}
       marginPagesDisplayed={1}
-      onPageChange={({ selected }) => setPage(selected + 1)}
+      onPageChange={({ selected }: { selected: number }) =>
+        setPage(selected + 1)
+      }
       forcePage={page - 1}
       containerClassName={css.pagination}
       activeClassName={css.active}
