@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { Note } from "../types/notes";
+import type { Note } from "../types/note";
 import type { NotesFormValues } from "../components/NoteForm/NoteForm";
 
 interface NotesResponse {
