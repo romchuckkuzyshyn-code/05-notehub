@@ -42,9 +42,12 @@ const NoteForm = ({ closeModal }: NoteFormProps) => {
     values: NotesFormValues,
     actions: FormikHelpers<NotesFormValues>,
   ) => {
-    mutate(values);
-    actions.resetForm();
-    closeModal();
+    mutate(values, {
+      onSuccess: () => {
+        actions.resetForm();
+        closeModal();
+      },
+    });
   };
 
   return (

@@ -25,6 +25,11 @@ function App() {
     placeholderData: keepPreviousData,
   });
 
+  const handleSearch = (value: string) => {
+    setSearch(value);
+    setPage(1);
+  };
+
   const notesResponse = notesQuery.data?.notes ?? [];
   const totalPages = notesQuery.data?.totalPages ?? 0;
   const isLoading = notesQuery.isLoading;
@@ -41,7 +46,7 @@ function App() {
   return (
     <div className={css.app}>
       <header className={css.toolbar}>
-        <SearchBox search={search} onSearch={setSearch} />
+        <SearchBox search={search} onSearch={handleSearch} />
         {totalPages > 1 && (
           <Pagination totalPages={totalPages} setPage={setPage} page={page} />
         )}
