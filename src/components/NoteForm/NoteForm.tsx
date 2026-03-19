@@ -3,7 +3,6 @@ import css from "./NoteForm.module.css";
 import { createNote } from "../../services/noteService";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import * as Yup from "yup";
-import clsx from "clsx";
 
 const scheme = Yup.object().shape({
   title: Yup.string().min(3).max(50).required(),
@@ -97,7 +96,7 @@ const NoteForm = ({ closeModal }: NoteFormProps) => {
                 <option value="Meeting">Meeting</option>
                 <option value="Shopping">Shopping</option>
               </Field>
-              <Field as="span" name="tag" className={css.error} />
+              <ErrorMessage name="tag" component="span" className={css.error} />
             </div>
 
             <div className={css.actions}>
