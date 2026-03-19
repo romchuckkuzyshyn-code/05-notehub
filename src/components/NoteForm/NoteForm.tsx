@@ -1,4 +1,4 @@
-import { Field, Form, Formik, type FormikHelpers } from "formik";
+import { ErrorMessage, Field, Form, Formik, type FormikHelpers } from "formik";
 import css from "./NoteForm.module.css";
 import { createNote } from "../../services/noteService";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -7,7 +7,10 @@ import clsx from "clsx";
 
 const scheme = Yup.object().shape({
   title: Yup.string().min(3).max(50).required(),
-  content: Yup.string().max(500).required(),
+  content: Yup.string().max(500),
+  tag: Yup.mixed<Tag>()
+    .oneOf(["Todo", "Work", "Personal", "Meeting", "Shopping"])
+    .required(),
 });
 
 interface NoteFormProps {
@@ -51,9 +54,7 @@ const NoteForm = ({ closeModal }: NoteFormProps) => {
       onSubmit={handleSubmit}
       validationSchema={scheme}
     >
-      {({ isSubmitting, errors }) => {
-        const isInvalidTitle = Boolean(errors.title);
-        const isInvalidContent = Boolean(errors.content);
+      {({ isSubmitting }) => {
         return (
           <Form className={css.form}>
             <div className={css.formGroup}>
@@ -64,9 +65,11 @@ const NoteForm = ({ closeModal }: NoteFormProps) => {
                 name="title"
                 className={css.input}
               />
-              {isInvalidTitle && (
-                <Field as="span" name="title" className={css.error} />
-              )}
+              <ErrorMessage
+                name="title"
+                component="span"
+                className={css.error}
+              />
             </div>
 
             <div className={css.formGroup}>
@@ -78,13 +81,11 @@ const NoteForm = ({ closeModal }: NoteFormProps) => {
                 rows={8}
                 className={css.textarea}
               />
-              {isInvalidContent && (
-                <Field
-                  as="span"
-                  name="content"
-                  className={clsx(isInvalidContent && css.error)}
-                />
-              )}
+              <ErrorMessage
+                name="content"
+                component="span"
+                className={css.error}
+              />
             </div>
 
             <div className={css.formGroup}>

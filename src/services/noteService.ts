@@ -40,6 +40,6 @@ export const createNote = async (values: NotesFormValues) => {
       Authorization: `Bearer ${import.meta.env.VITE_TOKEN_NOTEHUB}`,
     },
   };
-  const res = await axios.post<NotesFormValues>(url, values, options);
+  const res = await axios.post<Note>(url, values, options);
   return res.data;
 };

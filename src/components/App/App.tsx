@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import css from "./App.module.css";
 import { fetchNotes } from "../../services/noteService";
 import { useState } from "react";
@@ -22,6 +22,7 @@ function App() {
   const notesQuery = useQuery({
     queryKey: ["fetchNotes", { page, perPage, value }],
     queryFn: () => fetchNotes(page, perPage, value),
+    placeholderData: keepPreviousData,
   });
 
   const notesResponse = notesQuery.data?.notes ?? [];
@@ -50,7 +51,7 @@ function App() {
       </header>
       {isLoading && <Loader />}
       {isError && <Error />}
-      <NoteList notes={notesResponse} />
+      {notesResponse.length > 0 && <NoteList notes={notesResponse} />}
       {isOpenModal && (
         <Modal closeModal={closeModal}>
           <NoteForm closeModal={closeModal} />
