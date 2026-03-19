@@ -17,7 +17,7 @@ export const fetchNotes = async (
 ) => {
   const options = {
     params: { page, perPage, search },
-    headers: { Authorization: `Bearer ${import.meta.env.VITE_TOKEN_NOTEHUB}` },
+    headers: { Authorization: `Bearer ${import.meta.env.VITE_NOTEHUB_TOKEN}` },
   };
 
   const res = await axios.get<NotesResponse>(url, options);
@@ -27,7 +27,7 @@ export const fetchNotes = async (
 export const deleteNote = async (id: Note["id"]) => {
   const options = {
     headers: {
-      Authorization: `Bearer ${import.meta.env.VITE_TOKEN_NOTEHUB}`,
+      Authorization: `Bearer ${import.meta.env.VITE_NOTEHUB_TOKEN}`,
     },
   };
   const res = await axios.delete<Note>(`${url}/${id}`, options);
@@ -37,7 +37,7 @@ export const deleteNote = async (id: Note["id"]) => {
 export const createNote = async (values: NotesFormValues) => {
   const options = {
     headers: {
-      Authorization: `Bearer ${import.meta.env.VITE_TOKEN_NOTEHUB}`,
+      Authorization: `Bearer ${import.meta.env.VITE_NOTEHUB_TOKEN}`,
     },
   };
   const res = await axios.post<Note>(url, values, options);
